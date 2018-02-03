@@ -1,6 +1,6 @@
 <script>
-import Scroller from './Scroller'
-import ViewportFunctional from './ViewportFunctional'
+import Scroller from './Scroller.vue'
+import ViewportFunctional from './ViewportFunctional.vue'
 import ResizeObserver from 'resize-observer-polyfill';
 import { Motion } from 'vue-motion';
 

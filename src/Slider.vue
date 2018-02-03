@@ -1,5 +1,5 @@
 <script>
-import Viewport from './Viewport'
+import Viewport from './Viewport.vue'
 import { Motion } from 'vue-motion';
 
 export default {
