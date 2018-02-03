@@ -1,7 +1,7 @@
 {
   "name": "vue-sliderx",
   "version": "0.1.0",
-  "description": "Virtual Keyboard",
+  "description": "Virtual Slider",
   "main": "dist/vue-sliderx.cjs.js",
   "unpkg": "dist/vue-sliderx.min.js",
   "cdn": "dist/vue-sliderx.min.js",
@@ -24,7 +24,7 @@
   "poi": {
     "entry": "example/index.js",
     "dist": "example/dist",
-    "homepage": "/vue-sliderx/",
+    "homepage": "/vue-sliderX/",
     "html": {
       "template": "example/index.ejs"
     }

@@ -24,10 +24,6 @@ describe('Scroller', () => {
   it('render', () => {
     expect(wrapper.exists()).toBe(true)
   })
-  it('render children', () => {
-    console.log(wrapper.vnode)
-    expect(wrapper.findAll('.scrolleritem').length).toBe(10)
-  })
 
 
 })
