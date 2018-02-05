@@ -5,7 +5,7 @@
   "main": "dist/vue-sliderx.cjs.js",
   "unpkg": "dist/vue-sliderx.min.js",
   "cdn": "dist/vue-sliderx.min.js",
-  "module": "dist/vue-sliderx.esm.js",
+  "module": "dist/vue-sliderx.es.js",
   "files": [
     "dist"
   ],
@@ -35,7 +35,7 @@
     "vue-motion": "^0.2.0"
   },
   "devDependencies": {
-    "bili": "^1.6.5",
+    "bili": "^2.2.6",
     "eslint-config-rem": "^3.0.0",
     "gh-pages": "^1.0.0",
     "poi": "^9.1.4",
