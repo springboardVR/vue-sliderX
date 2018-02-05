@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from 'vue-test-utils'
-import Scroller from './Scroller.vue'
+import Scroller from '../Scroller.vue'
 import Vue from 'vue'
 // import jest from 'jest'
 

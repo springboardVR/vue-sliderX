@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from 'vue-test-utils'
-import Slider from './Slider.vue'
+import Slider from '../Slider.vue'
 import Vue from 'vue'
 // import jest from 'jest'
 
