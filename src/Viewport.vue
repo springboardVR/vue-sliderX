@@ -159,11 +159,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-.viewport {
-  overflow: hidden;
-}
-
-</style>

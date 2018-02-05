@@ -62,10 +62,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-.slider-container {
-}
-
-</style>

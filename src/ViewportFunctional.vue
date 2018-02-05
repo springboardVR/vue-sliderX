@@ -12,6 +12,9 @@ export default {
     return h('div', {
       ...data,
       class: 'viewport',
+      style: {
+        overflow: 'hidden',
+      }
     }, [
       h('div', {
         class: 'container',
