@@ -128,7 +128,10 @@ export default {
 
     const createViewport = (value) => h(ViewportFunctional, {
       props: { transform: value },
-      style: { height: `${this.viewportHeight}px` }
+      style: {
+        height: `${this.viewportHeight}px`,
+        overflow: 'hidden',
+      }
     }, [
       previousSlides,
       currentSlides,
