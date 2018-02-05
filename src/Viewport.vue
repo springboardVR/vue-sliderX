@@ -39,8 +39,10 @@ export default {
   methods: {
     _computeHeight() {
       this.$nextTick(() => {
-        this.viewportHeight = this.$el.querySelector('.current').scrollHeight
-        this.offsetHeight = this.$el.querySelector('.current').firstElementChild.scrollHeight
+        const el = this.$el.querySelector('.current')
+        if (!el) return
+        this.viewportHeight = el.scrollHeight
+        this.offsetHeight = el.firstElementChild && el.firstElementChild.scrollHeight
       })
     },
     _startTransition() {

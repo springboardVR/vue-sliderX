@@ -47,7 +47,6 @@ export default {
       },
     },
     this.$slots.default)
-
     return h('div',
       {
         class: 'slider-container',

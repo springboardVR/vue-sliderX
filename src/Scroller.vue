@@ -14,7 +14,7 @@ export default {
   render(h, ctx) {
     const { children, props, data } = ctx
     const { index, perPage } = props
-    return h('div', data, children.slice(index, index+perPage)) // TODO issue test utils
+    return h('div', data, children && children.slice(index, index+perPage)) // TODO issue test utils
     // return children
   }
 }
