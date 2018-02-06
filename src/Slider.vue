@@ -51,8 +51,8 @@ export default {
       {
         class: {
           'slider-container': true,
-          '-cannext': canNext,
-          '-canprev': canPrev,
+          '-cannext': this.canNext,
+          '-canprev': this.canPrev,
         },
         style: {
           position: 'relative'
