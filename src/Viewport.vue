@@ -71,9 +71,11 @@ export default {
       })
     },
     _startTransition() {
+      this.$emit('transition:start')
       this.disableTransition = false
     },
     _stopTransition() {
+      this.$emit('transition:end')
       this.disableTransition = true
       this._updateIndex()
     },

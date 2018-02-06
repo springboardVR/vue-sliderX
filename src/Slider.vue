@@ -18,6 +18,7 @@ export default {
   },
   data: () => ({
     index: 0,
+    isTransitioning: false,
   }),
   watch: {
     current: {
@@ -49,6 +50,10 @@ export default {
         ...this.$props,
         index: this.index,
       },
+      on: {
+        'transition:start': () => this.isTransitioning = true,
+        'transition:end': () => this.isTransitioning = false,
+      }
     },
     this.$slots.default)
     return h('div',
@@ -57,6 +62,7 @@ export default {
           'slider-container': true,
           '-cannext': this.canNext,
           '-canprev': this.canPrev,
+          '-is-transitioning': this.isTransitioning,
         },
         style: {
           position: 'relative'

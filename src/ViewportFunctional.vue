@@ -9,14 +9,13 @@ export default {
   render(h, ctx) {
     const { props, data, children } = ctx
 
-    return h('div', {
-      ...data,
-      class: 'viewport',
-    }, [
-      h('div', {
-        class: 'container',
-        style: { transform: `translate3d(0, ${props.transform}px, 0)` },
-      }, children)
+    return h('div',
+      data,
+      [
+        h('div', {
+          class: 'container',
+          style: { transform: `translate3d(0, ${props.transform}px, 0)` },
+        }, children)
     ])
   },
 }
