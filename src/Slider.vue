@@ -50,9 +50,9 @@ export default {
     return h('div',
       {
         class: {
-          'slider-container'; true,
-          '-cannext'; canNext,
-          '-canprev'; canPrev,
+          'slider-container': true,
+          '-cannext': canNext,
+          '-canprev': canPrev,
         },
         style: {
           position: 'relative'
