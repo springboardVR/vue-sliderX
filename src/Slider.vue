@@ -49,7 +49,11 @@ export default {
     this.$slots.default)
     return h('div',
       {
-        class: 'slider-container',
+        class: {
+          'slider-container'; true,
+          '-cannext'; canNext,
+          '-canprev'; canPrev,
+        },
         style: {
           position: 'relative'
         },
