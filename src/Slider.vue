@@ -11,6 +11,10 @@ export default {
     current: {
       default: 0,
     },
+    viewportClass: {
+      default: '',
+      type: String,
+    }
   },
   data: () => ({
     index: 0,
@@ -40,7 +44,7 @@ export default {
   },
   render(h, ctx) {
     const viewport = h(Viewport, {
-      class: 'viewport',
+      class: ['viewport', this.viewportClass],
       props: {
         ...this.$props,
         index: this.index,
