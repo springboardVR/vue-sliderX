@@ -5,28 +5,29 @@ export default {
   name: 'TransformContainer',
   props: {
     transformValue: {
-      default: 0,
-      type: Number
+      default: '0px',
+      type: String
     },
     padding: {
-      default: 0,
-      type: Number
+      default: '0px',
+      type: String
     },
     orientation: {
       default: 'vertical',
       type: String
     }
   },
-  render (h, ctx) {
-    // const { children, props } = ctx
-    const getCSSTransform = (transform) => {
+  render (h) {
+    const pattern = /(\d*\.?\d*)(%|px)/
+    const [, transform, unit] = this.transformValue.match(pattern)
+    const getCSSTransform = (value, unit) => {
       return this.orientation === 'horizontal'
-        ? `translate3d(${transform}px, 0px, 0px)`
-        : `translate3d(0px, ${transform}px, 0px)`
+        ? `translate3d(-${value}${unit}, 0px, 0px)`
+        : `translate3d(0px, -${value}${unit}, 0px)`
     }
     return h(Motion, {
       props: {
-        value: this.transformValue,
+        value: Number(transform),
         tag: 'div'
       },
       class: 'viewport',
@@ -45,12 +46,13 @@ export default {
           return h('div', {
             class: 'transformcontainer',
             style: {
-              transform: getCSSTransform(value),
+              transform: getCSSTransform(value, unit),
               display: 'flex',
               flexDirection: this.orientation === 'horizontal' ? 'row' : 'column',
               position: 'absolute',
               width: '100%',
-              [this.orientation === 'horizontal' ? 'left' : 'top']: `${this.padding}px`
+              height: '100%',
+              [this.orientation === 'horizontal' ? 'left' : 'top']: this.padding
             }
           }, this.$slots.default)
         }

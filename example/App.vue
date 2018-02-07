@@ -12,26 +12,62 @@
       <option value="-small">small</option>
       <option value="-big">big</option>
     </select>
-    <!-- <div class="flex w-100">
+    <h1>Default</h1>
+    <div class="slider-container">
 
-      <VirtualViewport
-        :per-page="3"
-        :index="index">
-        <div
-          v-for="i in 10"
-          :key="i"
-          class="items pa3 tc black b ba flex-auto">
+      <Slider
+          :current="index"
+          :per-page="3"
+          :orientation="orientation"
+          :loop="loop"
+          :class='sliderSize'
+          class="slider flex">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="items pa3 tc white b bg-blue">
           {{ i }}
         </div>
-      </VirtualViewport>
-    </div> -->
+      </Slider>
+      <!-- <Slider
+          :current="index"
+          :per-page="4"
+          :orientation="orientation"
+          :loop="loop"
+          :class='sliderSize'
+          class="slider flex">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="items pa3 tc white b bg-blue">
+          {{ i }}
+        </div>
+      </Slider>
+      <Slider
+          :current="index"
+          :per-page="5"
+          :orientation="orientation"
+          :loop="loop"
+          :class='sliderSize'
+          class="slider flex">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="items pa3 tc white b bg-blue">
+          {{ i }}
+        </div>
+      </Slider> -->
+    </div>
+
+    <h1>Autosize</h1>
     <Slider
-      ref="slider"
+      :current="index"
       :per-page="3"
       :orientation="orientation"
       :loop="loop"
       :class='sliderSize'
-      class="slider flex">
+      :auto-size="true"
+      class="sliderautosized flex">
       <div
         v-for="i in 10"
         :key="i"
@@ -59,8 +95,8 @@ export default {
   mounted () {
     window.addEventListener('keydown', (e) => {
       const key = e.key
-      if (key === 'ArrowLeft') this.$refs.slider.prev()
-      if (key === 'ArrowRight') this.$refs.slider.next()
+      if (key === 'ArrowLeft') this.index--
+      if (key === 'ArrowRight') this.index++
     })
   }
 }
@@ -68,6 +104,10 @@ export default {
 
 <style lang="css">
 
+.slider-container{
+  height: 100px;
+  width: 100%;
+}
 .slider.-small .items{
   height: 100px;
   /* width: 100px; */

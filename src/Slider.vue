@@ -29,6 +29,10 @@ export default {
     loop: {
       default: true,
       type: Boolean
+    },
+    autoSize: {
+      default: false,
+      type: Boolean
     }
   },
   data: () => ({
@@ -48,13 +52,31 @@ export default {
       return this.index > 0
     },
     transform () {
-      return (this.index * this.elementSizeValue) + (this.offset * this.elementSizeValue)
+      if(this.autoSize) {
+        return `${(this.index + this.offset) * this.elementSizeValue}px`
+      } else {
+        return `${(this.index + this.offset) * this.percentage}%`
+      }
+    },
+    padding () {
+      if(this.autoSize) {
+        return `${(this.effectiveIndex * this.elementSizeValue) + (this.offset * this.elementSizeValue)}px`
+      } else {
+        return `${(this.effectiveIndex * this.percentage) + (this.offset * this.percentage)}%`
+      }
     },
     effectiveIndex () {
-      return Math.floor(-this.effectiveTransform / this.elementSizeValue) - this.offset
+      if(this.autoSize) {
+        return Math.floor(-this.effectiveTransform / this.elementSizeValue) - this.offset
+      } else {
+        return Math.floor(this.effectiveTransform / this.percentage) - this.offset
+      }
     },
     elementSizeValue () {
-      return (this.orientation === 'horizontal' ? this.elementSize.width : this.elementSize.height ) || 1
+      return (this.orientation === 'horizontal' ? this.elementSize.width: this.elementSize.height ) || 1
+    },
+    percentage () {
+      return Math.round((1/this.perPage)*10000)/100
     },
     viewportSize () {
       return this.orientation === 'horizontal'
@@ -82,12 +104,27 @@ export default {
       this.index = this.canPrev > 0 ? this.index - 1 : this.index
     }
   },
-  render (h, ctx) {
-    const measure = h(RenderedSize, {
-      on: {
-        changed: value => { this.elementSize = value }
-      }
-    }, [this.$slots.default[0]])
+  render (h) {
+    const children = this.$slots.default
+      .map(vnode => this.$parent.$createElement('div', {
+        class: 'elwrapper',
+        key: vnode.key,
+        style: {
+          [this.orientation === 'horizontal' ? 'width' : 'height']: `${this.percentage}%`,
+          flexShrink: '0',
+        }
+      }, [vnode]))
+
+    let measure
+    if(this.autoSize) {
+      measure = h(RenderedSize, {
+        on: {
+          changed: value => {
+            this.elementSize = value
+          }
+        }
+      }, [children[0]])
+    }
 
     const viewport = h(TransformContainer, {
       class: ['viewport', this.viewportClass],
@@ -95,8 +132,8 @@ export default {
         tick: (value) => { this.effectiveTransform = value }
       },
       props: {
-        transformValue: -this.transform,
-        padding: (this.effectiveIndex * this.elementSizeValue) + (this.offset * this.elementSizeValue),
+        transformValue: this.transform,
+        padding: this.padding,
         orientation: this.orientation
       }
     }, [
@@ -106,7 +143,7 @@ export default {
           perPage: this.perPage,
           orientation: this.orientation
         }
-      }, this.$slots.default)
+      }, children)
     ])
 
     return h('div',
@@ -119,8 +156,16 @@ export default {
         },
         style: {
           position: 'relative',
-          height: `${this.viewportSize.height}px`,
-          width: this.orientation === 'horizontal' ? `${this.viewportSize.width}px` : undefined
+          ...(this.autoSize
+            ? {
+              height: `${this.viewportSize.height}px`,
+              width: `${this.viewportSize.width}px`
+            }
+            : {
+              height: '100%',
+              width: '100%'
+            }
+          )
         }
       },
       [

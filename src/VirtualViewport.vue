@@ -48,16 +48,14 @@ export default {
       ? [...children.slice(realIndex, length), ...children.slice(0, realIndex)]
       : children
 
-    // const beforeSlides = h('div', { class: 'before bg-blue flex' }, loopedChildren.slice(...intervals[0]))
     const style = {
       display: 'flex',
       flexDirection: props.orientation === 'horizontal' ? 'row' : 'column'
     }
-    const currentSlides = h('div', { class: 'current', style }, loopedChildren.slice(...intervals[1]))
-    const afterSlides = h('div', { class: 'after', style }, loopedChildren.slice(...intervals[2]))
+    const currentSlides = loopedChildren.slice(...intervals[1])
+    const afterSlides = loopedChildren.slice(...intervals[2])
 
     const slides = [
-      // beforeSlides,
       currentSlides,
       afterSlides
     ]
