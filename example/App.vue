@@ -70,11 +70,11 @@ export default {
 
 .slider.-small .items{
   height: 100px;
-  width: 100px;
+  /* width: 100px; */
 }
 .slider.-big .items{
   height: 200px;
-  width: 200px;
+  /* width: 200px; */
 }
 
 </style>

@@ -120,7 +120,7 @@ export default {
         style: {
           position: 'relative',
           height: `${this.viewportSize.height}px`,
-          width: `${this.viewportSize.width}px`
+          width: this.orientation === 'horizontal' ? `${this.viewportSize.width}px` : undefined
         }
       },
       [
