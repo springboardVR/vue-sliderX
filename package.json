@@ -36,7 +36,13 @@
   },
   "devDependencies": {
     "bili": "^2.2.6",
-    "eslint-config-rem": "^3.0.0",
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.2.2",
     "gh-pages": "^1.0.0",
     "poi": "^9.1.4",
     "rollup-plugin-vue": "^3.0.0",
@@ -48,15 +54,6 @@
   },
   "peerDependencies": {
     "vue": "^2.5.6"
-  },
-  "xo": {
-    "extends": "rem/prettier",
-    "envs": [
-      "jest"
-    ],
-    "ignores": [
-      "example/**"
-    ]
   },
   "jest": {
     "transformIgnorePatterns": [

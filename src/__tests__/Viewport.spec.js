@@ -8,19 +8,18 @@ describe('Viewport', () => {
   let localVue = createLocalVue()
   beforeEach(() => {
     Vue.util.warn = jest.fn()
-    const SliderWithSlots = {
-      name: 'SliderWithSlots',
+    const ViewportWithSlots = {
+      name: 'ViewportWithSlots',
       render(h) {
         const children = Array(10).fill(null).map((n, i) => h('div', { class: 'scrolleritem' }, i))
         return h(Viewport, {
-          scopedSlots: {
-            prev: () => h('button', { class: 'prevbtn' }, 'prev'),
-            next: () => h('button', { class: 'prevbtn' }, 'next'),
-          },
+          props: {
+            index: 1,
+          }
         }, children)
       }
     }
-    const container = mount(SliderWithSlots, {
+    const container = mount(ViewportWithSlots, {
       // localVue,
     })
     wrapper = container.find({ name: 'Viewport' })
@@ -30,6 +29,19 @@ describe('Viewport', () => {
   it('render', () => {
     expect(wrapper.exists()).toBe(true)
   })
+
+  describe('orientation', () => {
+    it('should transform along orientation axis', () => {
+      wrapper.setProps({
+        orientation: 'horizontal',
+        index: 1,
+      })
+
+      expect(wrapper.find('.container').vnode.data.style.transform).toBe('translate3d(0px, 0px, 0px)')
+    })
+
+  })
+
   //render
   // it('render current', () => {
   //   wrapper.setProps({ index: 1, perPage: 3 })

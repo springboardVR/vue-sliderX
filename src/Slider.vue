@@ -1,29 +1,77 @@
 <script>
-import Viewport from './Viewport.vue'
-import { Motion } from 'vue-motion';
+import TransformContainerFunctional from './TransformContainerFunctional.vue'
+import VirtualViewport from './VirtualViewport.vue'
+import RenderedSize from './RenderedSize.vue'
 
 export default {
   name: 'Slider',
   props: {
     perPage: {
       default: 3,
+      type: Number
     },
     current: {
       default: 0,
+      type: Number
     },
     viewportClass: {
       default: '',
-      type: String,
+      type: String
+    },
+    orientation: {
+      default: 'vertical',
+      type: String
+    },
+    offset: {
+      default: 1,
+      type: Number
+    },
+    loop: {
+      default: true,
+      type: Boolean
     }
   },
   data: () => ({
     index: 0,
     isTransitioning: false,
+    effectiveTransform: 0,
+    elementSize: 0,
   }),
+  computed: {
+    canNext () {
+      if (this.loop) return true
+      const length = this.$slots.default.length
+      return (this.index + this.perPage) < length
+    },
+    canPrev () {
+      if (this.loop) return true
+      return this.index > 0
+    },
+    transform () {
+      return (this.index * this.elementSizeValue) + (this.offset * this.elementSizeValue)
+    },
+    effectiveIndex () {
+      return Math.floor(-this.effectiveTransform / this.elementSizeValue) - this.offset
+    },
+    elementSizeValue () {
+      return (this.orientation === 'horizontal' ? this.elementSize.width : this.elementSize.height ) || 1
+    },
+    viewportSize () {
+      return this.orientation === 'horizontal'
+        ? { width: this.elementSize.width * this.perPage, height: this.elementSize.height }
+        : { width: this.elementSize.width, height: this.elementSize.height * this.perPage }
+    },
+  },
   watch: {
     current: {
       immediate: true,
-      handler(val) { this.index = val}
+      handler (val) { this.index = val }
+    },
+    orientation(val) {
+      this.effectiveTransform = 0
+    },
+    loop(val) {
+      this.index = this.current
     }
   },
   methods: {
@@ -32,47 +80,55 @@ export default {
     },
     prev () {
       this.index = this.canPrev > 0 ? this.index - 1 : this.index
-    },
+    }
   },
-  computed: {
-    canNext () {
-      const length = this.$slots.default.length
-      return (this.index + 1) < length
-    },
-    canPrev () {
-      return this.index > 0
-    },
-  },
-  render(h, ctx) {
-    const viewport = h(Viewport, {
-      class: ['viewport', this.viewportClass],
-      props: {
-        ...this.$props,
-        index: this.index,
-      },
+  render (h, ctx) {
+    const measure = h(RenderedSize, {
       on: {
-        'transition:start': () => this.isTransitioning = true,
-        'transition:end': () => this.isTransitioning = false,
+        changed: value => { this.elementSize = value }
       }
-    },
-    this.$slots.default)
+    }, [this.$slots.default[0]])
+
+    const viewport = h(TransformContainerFunctional, {
+      class: ['viewport', this.viewportClass],
+      on: {
+        tick: (value) => { this.effectiveTransform = value }
+      },
+      props: {
+        transformValue: -this.transform,
+        padding: (this.effectiveIndex * this.elementSizeValue) + (this.offset * this.elementSizeValue),
+        orientation: this.orientation
+      }
+    }, [
+      h(VirtualViewport, {
+        props: {
+          index: this.effectiveIndex,
+          perPage: this.perPage,
+          orientation: this.orientation
+        }
+      }, this.$slots.default)
+    ])
+
     return h('div',
       {
         class: {
           'slider-container': true,
           '-cannext': this.canNext,
           '-canprev': this.canPrev,
-          '-is-transitioning': this.isTransitioning,
+          '-is-transitioning': this.isTransitioning
         },
         style: {
-          position: 'relative'
-        },
+          position: 'relative',
+          height: `${this.viewportSize.height}px`,
+          width: `${this.viewportSize.width}px`
+        }
       },
       [
         this.$scopedSlots.prev && this.$scopedSlots.prev({ canPrev: this.canPrev, prev: this.prev }),
+        measure,
         viewport,
-        this.$scopedSlots.next && this.$scopedSlots.next({ canNext: this.canNext, next: this.next }),
+        this.$scopedSlots.next && this.$scopedSlots.next({ canNext: this.canNext, next: this.next })
       ])
-  },
+  }
 }
 </script>
