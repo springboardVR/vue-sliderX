@@ -1,29 +1,30 @@
 import { mount, createLocalVue } from 'vue-test-utils'
-import Scroller from '../Scroller.vue'
+import VirtualViewport from '../VirtualViewport.vue'
 import Vue from 'vue'
 // import jest from 'jest'
 
-describe('Scroller', () => {
+describe('VirtualViewport', () => {
   let wrapper
   let localVue = createLocalVue()
   beforeEach(() => {
     Vue.util.warn = jest.fn()
-    const ScrollerWithChildren = {
-      name: 'ScrollerWithChildren',
-      render(h) {
+    const ViewportWithSlots = {
+      name: 'ViewportWithSlots',
+      render (h) {
         const children = Array(10).fill(null).map((n, i) => h('div', { class: 'scrolleritem' }, i))
-        return h(Scroller, {}, children)
+        return h(VirtualViewport, {
+          props: {
+            index: 1
+          }
+        }, children)
       }
     }
-    wrapper = mount(ScrollerWithChildren, {
-      localVue,
-    })
+    const container = mount(ViewportWithSlots, {})
+    wrapper = container
   })
 
-  //render
+  // render
   it('render', () => {
     expect(wrapper.exists()).toBe(true)
   })
-
-
 })

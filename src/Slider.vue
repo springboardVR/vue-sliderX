@@ -1,5 +1,5 @@
 <script>
-import TransformContainerFunctional from './TransformContainerFunctional.vue'
+import TransformContainer from './TransformContainer.vue'
 import VirtualViewport from './VirtualViewport.vue'
 import RenderedSize from './RenderedSize.vue'
 
@@ -89,7 +89,7 @@ export default {
       }
     }, [this.$slots.default[0]])
 
-    const viewport = h(TransformContainerFunctional, {
+    const viewport = h(TransformContainer, {
       class: ['viewport', this.viewportClass],
       on: {
         tick: (value) => { this.effectiveTransform = value }

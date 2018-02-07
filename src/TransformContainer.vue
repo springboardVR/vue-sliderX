@@ -42,6 +42,7 @@ export default {
         default: ({ value }) => {
           this.$emit('tick', value)
           return h('div', {
+            class: 'transformcontainer',
             style: {
               transform: getCSSTransform(value),
               display: 'flex',

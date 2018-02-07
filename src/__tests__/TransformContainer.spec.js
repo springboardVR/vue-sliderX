@@ -10,12 +10,12 @@ describe('TransformContainer', () => {
     Vue.util.warn = jest.fn()
     const ContainerWithSlots = {
       name: 'ContainerWithSlots',
-      render(h) {
+      render (h) {
         const children = Array(10).fill(null).map((n, i) => h('div', { class: 'scrolleritem' }, i))
         return h(TransformContainer, {
           props: {
             orientation: 'horizontal',
-            transformValue: 100,
+            transformValue: 100
           }
         }, children)
       }
@@ -24,31 +24,26 @@ describe('TransformContainer', () => {
     wrapper = container.find({ name: 'TransformContainer' })
   })
 
-  //render
+  // render
   it('render', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should transform along orientation axis', () => {
     wrapper.setProps({
-      orientation: 'horizontal',
+      orientation: 'horizontal'
     })
     expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(100px, 0px, 0px)')
     wrapper.setProps({
-      orientation: 'vertical',
+      orientation: 'vertical'
     })
     expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(0px, 100px, 0px)')
   })
 
-
-  //render
+  // render
   // it('render current', () => {
   //   wrapper.setProps({ index: 1, perPage: 3 })
   //   // expect(wrapper.find('.before').findAll('div').length).toBe(1)
   //   expect(wrapper.find('.current').findAll('div').length).toBe(3)
   // })
-
-
-
-
 })
