@@ -1,6 +1,6 @@
 {
   "name": "vue-sliderx",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Virtual Slider",
   "main": "dist/vue-sliderx.cjs.js",
   "unpkg": "dist/vue-sliderx.min.js",
