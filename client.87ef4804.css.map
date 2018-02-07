@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./example/App.vue"],"names":[],"mappings":"AACA,sBACE,YAAc,CAGhB,oBACE,YAAc","file":"client.87ef4804.css","sourcesContent":["\n.slider.-small .items{\n  height: 100px;\n  /* width: 100px; */\n}\n.slider.-big .items{\n  height: 200px;\n  /* width: 200px; */\n}\n\n\n\n\n// WEBPACK FOOTER //\n// ./example/App.vue"],"sourceRoot":""}
