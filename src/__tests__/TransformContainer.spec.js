@@ -15,7 +15,7 @@ describe('TransformContainer', () => {
         return h(TransformContainer, {
           props: {
             orientation: 'horizontal',
-            transformValue: 100
+            transformValue: '100px'
           }
         }, children)
       }
@@ -33,11 +33,11 @@ describe('TransformContainer', () => {
     wrapper.setProps({
       orientation: 'horizontal'
     })
-    expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(100px, 0px, 0px)')
+    expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(-100px, 0px, 0px)')
     wrapper.setProps({
       orientation: 'vertical'
     })
-    expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(0px, 100px, 0px)')
+    expect(wrapper.find('.transformcontainer').vnode.data.style.transform).toBe('translate3d(0px, -100px, 0px)')
   })
 
   // render
