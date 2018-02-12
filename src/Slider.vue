@@ -39,7 +39,7 @@ export default {
     index: 0,
     isTransitioning: false,
     effectiveTransform: 0,
-    elementSize: 0,
+    elementSize: 0
   }),
   computed: {
     canNext () {
@@ -52,47 +52,47 @@ export default {
       return this.index > 0
     },
     transform () {
-      if(this.autoSize) {
+      if (this.autoSize) {
         return `${(this.index + this.offset) * this.elementSizeValue}px`
       } else {
         return `${(this.index + this.offset) * this.percentage}%`
       }
     },
     padding () {
-      if(this.autoSize) {
+      if (this.autoSize) {
         return `${(this.effectiveIndex * this.elementSizeValue) + (this.offset * this.elementSizeValue)}px`
       } else {
         return `${(this.effectiveIndex * this.percentage) + (this.offset * this.percentage)}%`
       }
     },
     effectiveIndex () {
-      if(this.autoSize) {
+      if (this.autoSize) {
         return Math.floor(-this.effectiveTransform / this.elementSizeValue) - this.offset
       } else {
         return Math.floor(this.effectiveTransform / this.percentage) - this.offset
       }
     },
     elementSizeValue () {
-      return (this.orientation === 'horizontal' ? this.elementSize.width: this.elementSize.height ) || 1
+      return (this.orientation === 'horizontal' ? this.elementSize.width : this.elementSize.height) || 1
     },
     percentage () {
-      return Math.round((1/this.perPage)*10000)/100
+      return Math.round((1 / this.perPage) * 10000) / 100
     },
     viewportSize () {
       return this.orientation === 'horizontal'
         ? { width: this.elementSize.width * this.perPage, height: this.elementSize.height }
         : { width: this.elementSize.width, height: this.elementSize.height * this.perPage }
-    },
+    }
   },
   watch: {
     current: {
       immediate: true,
       handler (val) { this.index = val }
     },
-    orientation(val) {
+    orientation (val) {
       this.effectiveTransform = 0
     },
-    loop(val) {
+    loop (val) {
       this.index = this.current
     }
   },
@@ -111,12 +111,12 @@ export default {
         key: vnode.key,
         style: {
           [this.orientation === 'horizontal' ? 'width' : 'height']: `${this.percentage}%`,
-          flexShrink: '0',
+          flexShrink: '0'
         }
       }, [vnode]))
 
     let measure
-    if(this.autoSize) {
+    if (this.autoSize) {
       measure = h(RenderedSize, {
         on: {
           changed: value => {
@@ -169,10 +169,10 @@ export default {
         }
       },
       [
-        this.$scopedSlots.prev && this.$scopedSlots.prev({ canPrev: this.canPrev, prev: this.prev }),
+        this.$scopedSlots.prev && this.$scopedSlots.prev({ canPrev: this.canPrev, prev: this.prev, index: this.index }),
         measure,
         viewport,
-        this.$scopedSlots.next && this.$scopedSlots.next({ canNext: this.canNext, next: this.next })
+        this.$scopedSlots.next && this.$scopedSlots.next({ canNext: this.canNext, next: this.next, index: this.index })
       ])
   }
 }
