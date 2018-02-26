@@ -2,6 +2,7 @@
 import TransformContainer from './TransformContainer.vue'
 import VirtualViewport from './VirtualViewport.vue'
 import RenderedSize from './RenderedSize.vue'
+import { cloneVNodes } from './helpers.js'
 
 export default {
   name: 'Slider',
@@ -27,6 +28,10 @@ export default {
       type: Number
     },
     loop: {
+      default: true,
+      type: Boolean
+    },
+    clone: {
       default: true,
       type: Boolean
     },
@@ -105,7 +110,30 @@ export default {
     }
   },
   render (h) {
-    const children = this.$slots.default
+    const slotWithClone = (() => {
+      const remaining = (this.perPage + this.offset) - this.$slots.default.length
+      const shouldClone = remaining > 0
+      if (this.clone && shouldClone) {
+        const clones = (() => {
+          const cloneRecursive = (remaining, clones = []) => {
+            if (remaining > 0) {
+              const newClones = [...clones, ...cloneVNodes(this.$slots.default.slice(0, remaining), this.$createElement)]
+              return cloneRecursive(Math.max(0, remaining - newClones.length), newClones)
+            } else {
+              return clones
+            }
+          }
+          return cloneRecursive(remaining)
+        })()
+        return [
+          ...this.$slots.default,
+          ...clones.map((vnode, i) => ({ ...vnode, key: `clone${i}${vnode.key}` }))
+        ]
+      } else {
+        return this.$slots.default
+      }
+    })()
+    const children = slotWithClone
       .map(vnode => this.$parent.$createElement('div', {
         class: 'elwrapper',
         key: vnode.key,
