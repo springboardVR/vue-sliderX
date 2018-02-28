@@ -48,6 +48,10 @@ export default {
       ? [...children.slice(realIndex, length), ...children.slice(0, realIndex)]
       : children
 
+    const style = {
+      display: 'flex',
+      flexDirection: props.orientation === 'horizontal' ? 'row' : 'column'
+    }
     const currentSlides = loopedChildren.slice(...intervals[1])
     const afterSlides = loopedChildren.slice(...intervals[2])
 

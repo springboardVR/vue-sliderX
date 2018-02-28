@@ -16,16 +16,16 @@
     <div class="slider-container">
 
       <Slider
-        :current="index"
-        :per-page="3"
-        :orientation="orientation"
-        :loop="loop"
-        :class="sliderSize"
-        class="slider flex">
-        <div
-          v-for="i in 10"
-          :key="i"
-          class="items pa3 tc white b bg-blue">
+          :current="index"
+          :per-page="3"
+          :orientation="orientation"
+          :loop="loop"
+          :class='sliderSize'
+          class="slider flex">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="items pa3 tc white b bg-blue">
           {{ i }}
         </div>
       </Slider>
@@ -65,7 +65,7 @@
       :per-page="3"
       :orientation="orientation"
       :loop="loop"
-      :class="sliderSize"
+      :class='sliderSize'
       :auto-size="true"
       class="sliderautosized flex">
       <div
@@ -75,25 +75,6 @@
         {{ i }}
       </div>
     </Slider>
-
-    <h1>Clone</h1>
-    <div class="slider-container">
-      <Slider
-        :current="index"
-        :per-page="4"
-        :orientation="orientation"
-        :loop="loop"
-        :clone="true"
-        :class="sliderSize"
-        class="slider flex">
-        <div
-          v-for="i in 2"
-          :key="i"
-          class="items pa3 tc white b bg-blue">
-          {{ i }}
-        </div>
-      </Slider>
-    </div>
   </div>
 </template>
 
