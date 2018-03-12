@@ -58,7 +58,7 @@ export default {
     },
     canPrev () {
       if (this.loop) return true
-      return this.index - this.navigationIncrement > 0
+      return (this.index - this.navigationIncrement) >= 0
     },
     transform () {
       if (this.autoSize) {
