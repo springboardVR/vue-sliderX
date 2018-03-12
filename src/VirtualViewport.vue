@@ -44,8 +44,8 @@ export default {
     const realIndex = index < 0 ? (length + index) % length : index % length
     const intervals = makeIntervals(perPage, offset)
 
-    const loopedChildren = realIndex !== 0 || loop
-      ? [...children.slice(realIndex, length), ...children.slice(0, realIndex)]
+    const loopedChildren = realIndex !== 0
+      ? [...children.slice(realIndex, length), ...(loop ? children.slice(0, realIndex) : [])]
       : children
 
     const currentSlides = loopedChildren.slice(...intervals[1])
