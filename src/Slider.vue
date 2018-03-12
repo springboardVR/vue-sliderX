@@ -35,6 +35,10 @@ export default {
       default: true,
       type: Boolean
     },
+    navigationIncrement: {
+      default: 1,
+      type: Number
+    },
     autoSize: {
       default: false,
       type: Boolean
@@ -50,11 +54,11 @@ export default {
     canNext () {
       if (this.loop) return true
       const length = this.$slots.default.length
-      return (this.index + this.perPage) < length
+      return (this.index + this.navigationIncrement) < length
     },
     canPrev () {
       if (this.loop) return true
-      return this.index > 0
+      return this.index - this.navigationIncrement > 0
     },
     transform () {
       if (this.autoSize) {
@@ -103,10 +107,10 @@ export default {
   },
   methods: {
     next () {
-      this.index = this.canNext ? this.index + 1 : this.index
+      this.index = this.canNext ? this.index + this.navigationIncrement : this.index
     },
     prev () {
-      this.index = this.canPrev > 0 ? this.index - 1 : this.index
+      this.index = this.canPrev > 0 ? this.index - this.navigationIncrement : this.index
     }
   },
   render (h) {
